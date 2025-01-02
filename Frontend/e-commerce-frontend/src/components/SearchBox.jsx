@@ -24,7 +24,7 @@ const SearchBox = () => {
         <div className='inline-flex items-center justify-center border border-gray-400 px-5 rounded-2xl pr-4'>
            <input value={search} onChange={(e)=>setSearch(e.target.value)} className='flex-1 outline-none bg-inherit text-sm p-2 rounded' type="text" placeholder='Search here'></input>
         </div>
-        <img onClick={()=>setShowSearch(false)} src={assets.cross_icon} className='inline w-3 cursor-pointer' />
+        <img onClick={()=>{setShowSearch(false); setSearch("")}} src={assets.cross_icon} className='inline w-3 cursor-pointer' />
     </div>
   ) : null
 }
