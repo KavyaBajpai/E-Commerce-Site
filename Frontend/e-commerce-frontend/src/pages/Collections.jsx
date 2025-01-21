@@ -13,9 +13,6 @@ const Collections = () => {
   const [subCategory, setSubCategory] = useState([]);
   const [sortType, setSortType] = useState('relevance');
 
-  // useEffect(() => {
-  //   setFilteredProducts(products)
-  // },[])
 
   const applyFilters = () => {
     let tempProducts = [...products];
@@ -51,16 +48,18 @@ const Collections = () => {
           applyFilters()        
           break;
     }
-    
+    //setFilteredProducts(tempProducts2)
   }
 
   useEffect(() => {
-    applyFilters()
+    applyFilters();
+    sortProducts();
   },[category, subCategory, search])
 
   useEffect(() => {
-    sortProducts()
-  },[sortType, filteredProducts])
+    applyFilters();
+    sortProducts();
+  },[sortType, category, subCategory])
 
   const toggleCategory = (e) => {
     if(category.includes(e.target.value)){
