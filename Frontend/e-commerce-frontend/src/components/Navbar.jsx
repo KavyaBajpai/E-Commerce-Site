@@ -6,7 +6,7 @@ import { ShopContext } from '../context/ShopContext.jsx'
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false)
-  const {showSearch, setShowSearch} = useContext(ShopContext);
+  const {showSearch, setShowSearch, getCartCount} = useContext(ShopContext);
    return (
     <div className='flex items-center justify-between py-5 font-medium'>
        <Link to='/'>
@@ -52,7 +52,7 @@ const Navbar = () => {
 
             <Link to='/cart' className='relative'>
                <img src={assets.cart_icon} alt="" className='w-5'/>
-               <p className=' absolute right-[-5px] bottom-[-5px] bg-gray-800 w-4 text-center leading-4 rounded-full aspect-square text-white text-[8px]'>10</p>
+               <p className=' absolute right-[-5px] bottom-[-5px] bg-gray-800 w-4 text-center leading-4 rounded-full aspect-square text-white text-[8px]'>{getCartCount()}</p>
             </Link>
 
             {/* leading mtlb line height... used here to make the p tag and its background round */}
