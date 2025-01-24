@@ -3,6 +3,7 @@ import { products } from "../assets/assets";
 import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {useNavigate} from 'react-router-dom'
 export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
@@ -12,6 +13,7 @@ const ShopContextProvider = (props) => {
     const [search, setSearch] = useState('');
     const [showSearch, setShowSearch] = useState(false);
     const [cartItems, setCartItems] = useState([]);
+    const navigate = useNavigate()
     //structuredclone??
     const addToCart = async (itemId, size) => {
         if(!size){
@@ -88,7 +90,7 @@ const ShopContextProvider = (props) => {
         return amount
     }
 
-    const value = { products,currency,deliveryCharge,search,setSearch,showSearch,setShowSearch,cartItems,addToCart,getCartCount,updateQuantity,getCartAmount };
+    const value = { products,currency,deliveryCharge,search,setSearch,showSearch,setShowSearch,cartItems,addToCart,getCartCount,updateQuantity,getCartAmount,navigate };
 
     return (
         <ShopContext.Provider value={value}>
