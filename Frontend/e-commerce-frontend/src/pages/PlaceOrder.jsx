@@ -7,8 +7,10 @@ import { ShopContext } from '../context/ShopContext'
 const PlaceOrder = () => {
 
   const [method, setMethod]= useState('cod')
+  //using navigate to set the path to orders page
   const {navigate} = useContext(ShopContext)
   return (
+    //adding code for palce order page
     <div className='flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t'>
         {/* Left Side */}
       <div className='flex flex-col gap-4 sm:max-w-[480px]'>
