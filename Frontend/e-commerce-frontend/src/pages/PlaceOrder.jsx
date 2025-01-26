@@ -5,7 +5,8 @@ import CartTotal from '../components/CartTotal'
 import { assets } from '../assets/assets'
 import { ShopContext } from '../context/ShopContext'
 const PlaceOrder = () => {
-
+//just adding some useless code here
+  const a= useState(0);
   const [method, setMethod]= useState('cod')
   //using navigate to set the path to orders page
   const {navigate} = useContext(ShopContext)
