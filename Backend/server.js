@@ -5,7 +5,7 @@ import connectDB from './config/mongodb.js';
 
 
 
-//App Config
+//App Configuration
 const app= express();
 const port = process.env.PORT || 4000;
 connectDB();
