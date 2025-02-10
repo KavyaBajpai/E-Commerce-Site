@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { assets } from '../assets/assets'
-const Add = () => {
+import axios from 'axios'
+import { backendUrl } from '../App'
+import { toast } from 'react-toastify'
+const Add = ({token}) => {
 
   const [image1, setImage1] = useState(false);
   const [image2, setImage2] = useState(false);
@@ -11,12 +14,55 @@ const Add = () => {
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState('')
   const [category, setCategory] = useState('')
-  const [subcategory, setSubcategory] = useState('')
+  const [subCategory, setSubcategory] = useState('')
   const [bestseller, setBestseller] = useState(false)
   const [sizes, setSizes] = useState([])
 
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    try
+    {
+       const formData = new FormData()
+       formData.append("name", name);
+       formData.append("description", description);
+       formData.append("price", price);
+       formData.append("category", category);
+       formData.append("subCategory", subCategory);
+       formData.append("bestseller", bestseller);
+       formData.append("sizes", JSON.stringify(sizes));
+
+       image1 && formData.append("image1", image1)
+       image2 && formData.append("image2", image2)
+       image3 && formData.append("image3", image3)
+       image4 && formData.append("image4", image4)
+
+       const response = await axios.post(backendUrl + "/api/product/add", formData, {headers:{token}})
+       
+       if(response.data.success)
+       {toast.success(response.data.message)
+        setName('')
+        setDescription('')
+        setImage1(false)
+        setImage2(false)
+        setImage3(false)
+        setImage4(false)
+        setPrice('')
+       }
+       else{
+        toast.error(response.data.message)
+       }
+       
+       
+    }
+    catch(error)
+    {
+       console.log(error)
+       toast.error(error.message)
+    }
+  }
+
   return (
-    <form className='flex flex-col w-full items-start gap-3'>
+    <form onSubmit={onSubmitHandler} className='flex flex-col w-full items-start gap-3'>
       <div>
         <p className='mb-2 font-medium text-xl'>Upload Images</p>
         <div className='flex gap-4'>
@@ -27,17 +73,17 @@ const Add = () => {
 
           <label htmlFor="image2">
             <img className='w-20' src={!image2 ? assets.upload_area : URL.createObjectURL(image2)}></img>
-            <input onChange={(e)=>setImage1(e.target.files[0])} type="file" id="image2" hidden />
+            <input onChange={(e)=>setImage2(e.target.files[0])} type="file" id="image2" hidden />
           </label>
 
           <label htmlFor="image3">
             <img className='w-20' src={!image3 ? assets.upload_area : URL.createObjectURL(image3)}></img>
-            <input onChange={(e)=>setImage1(e.target.files[0])} type="file" id="image3" hidden />
+            <input onChange={(e)=>setImage3(e.target.files[0])} type="file" id="image3" hidden />
           </label>
 
           <label htmlFor="image4">
             <img className='w-20' src={!image4 ? assets.upload_area : URL.createObjectURL(image4)}></img>
-            <input onChange={(e)=>setImage1(e.target.files[0])} type="file" id="image4" hidden />
+            <input onChange={(e)=>setImage4(e.target.files[0])} type="file" id="image4" hidden />
           </label>
         </div>
       </div>
@@ -103,7 +149,7 @@ const Add = () => {
       </div>
 
       <div className='flex gap-2 items-center'>
-        <input className='w-5 h-5'type="checkbox" id="bestseller"/>
+        <input onChange={()=>setBestseller(prev => !prev)} checked={bestseller} className='w-5 h-5'type="checkbox" id="bestseller"/>
         <label className=' cursor-pointer font-medium text-xl' htmlFor="bestseller">Add to Bestsellers</label>
       </div>
 
