@@ -95,6 +95,7 @@ const ShopContextProvider = (props) => {
     const getProductData = async () => {
         try{
               const response = await axios.get(backendUrl+"/api/product/list")
+              console.log(response.data.success)
               if(response.data.success)
               {
                  setProducts(response.data.products)
@@ -114,6 +115,10 @@ const ShopContextProvider = (props) => {
     useEffect(()=>{
         getProductData();
     })
+    
+    useEffect(() => {
+        console.log("Updated Products State:", products); // ✅ Check when state updates
+      }, [products]); 
 
     const value = { products,currency,deliveryCharge,search,setSearch,showSearch,setShowSearch,cartItems,addToCart,getCartCount,updateQuantity,getCartAmount,navigate,backendUrl };
 
