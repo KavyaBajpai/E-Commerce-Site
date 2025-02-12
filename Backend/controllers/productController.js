@@ -9,6 +9,7 @@ const addProduct = async (req,res) => {
             const image4 = req.files?.image4?.[0]?.path || null;
             const images = [image1, image2, image3, image4].filter((image)=> image!==null);
             //console.log("Received Files:", req.files);
+            //console.log("received data: ", req.body);
             const validPrice = parseFloat(price);
             if (isNaN(validPrice)) {
             return res.status(400).json({ success: false, message: "Invalid price value" });
@@ -27,17 +28,17 @@ const addProduct = async (req,res) => {
                 category,
                 subCategory,
                 sizes: JSON.parse(sizes),
-                bestSeller: bestSeller==="true" ? true : false,
+                bestSeller: bestSeller=== "true",
                 image: imagesUrl,
                 date: Date.now()
             }
-            console.log("Product Data:", productData);
+            //console.log("Product Data:", productData);
             const product = new productModel(productData);
             await product.save();
             //console.log("Extracted Data:", {name, description, price, category, subCategory, sizes, bestSeller} );
             //console.log("Images:",  {image1, image2, image3, image4} );
             //console.log("Images URL:", imagesUrl);
-            res.json({success:true, message: "Product Added Successfully"});
+            res.json({success:true, message: "Product Added Successfully", data: productData});
         }
    catch (error) {
        console.log(error);

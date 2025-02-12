@@ -11,6 +11,7 @@ const ShopContextProvider = (props) => {
     const currency = "₹";
     const deliveryCharge = 40;
     const backendUrl = import.meta.env.VITE_BACKEND_URL
+    //console.log(backendUrl)
     const [search, setSearch] = useState('');
     const [showSearch, setShowSearch] = useState(false);
     const [cartItems, setCartItems] = useState([]);
@@ -92,33 +93,50 @@ const ShopContextProvider = (props) => {
         return amount
     }
 
+    // const getProductData = async () => {
+    //     try{
+    //           const response = await axios.get(backendUrl+"/api/product/list")
+    //           console.log(response.data.success)
+    //           if(response.data.success)
+    //           {
+    //              setProducts(response.data.products)
+    //           }
+    //           else
+    //           {
+    //             toast.error(response.data.message)
+    //           }
+    //     }
+    //     catch(error)
+    //     {
+    //        console.log(error)
+    //        toast.error(error.message)
+    //     }
+    // }
+
+    
+
     const getProductData = async () => {
-        try{
-              const response = await axios.get(backendUrl+"/api/product/list")
-              console.log(response.data.success)
-              if(response.data.success)
-              {
-                 setProducts(response.data.products)
-              }
-              else
-              {
-                toast.error(response.data.message)
-              }
+        try {
+            const response = await axios.get(backendUrl + "/api/product/list");
+            console.log("API Response:", response.data); // ✅ Log full response
+            if (response.data.success) {
+                console.log("Products received:", response.data.products); // ✅ Check this
+                setProducts(response.data.products);
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (error) {
+            console.log("API Fetch Error:", error);
+            toast.error(error.message);
         }
-        catch(error)
-        {
-           console.log(error)
-           toast.error(error.message)
-        }
-    }
+    };
 
     useEffect(()=>{
         getProductData();
-    })
+    },[])
     
-    useEffect(() => {
-        console.log("Updated Products State:", products); // ✅ Check when state updates
-      }, [products]); 
+    
+    
 
     const value = { products,currency,deliveryCharge,search,setSearch,showSearch,setShowSearch,cartItems,addToCart,getCartCount,updateQuantity,getCartAmount,navigate,backendUrl };
 
