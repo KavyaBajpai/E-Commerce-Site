@@ -17,6 +17,7 @@ const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState([]);
     const navigate = useNavigate()
     const [products, setProducts] = useState([])
+    const [token, setToken] = useState('')
     //structuredclone??
     const addToCart = async (itemId, size) => {
         if(!size){
@@ -134,11 +135,16 @@ const ShopContextProvider = (props) => {
     useEffect(()=>{
         getProductData();
     },[])
+
+    useEffect(()=>{
+        if(!token && localStorage.getItem('token'))
+            setToken(localStorage.getItem('token'))
+    })
     
     
     
 
-    const value = { products,currency,deliveryCharge,search,setSearch,showSearch,setShowSearch,cartItems,addToCart,getCartCount,updateQuantity,getCartAmount,navigate,backendUrl };
+    const value = { products,currency,deliveryCharge,search,setSearch,showSearch,setShowSearch,cartItems,addToCart,getCartCount,updateQuantity,getCartAmount,navigate,backendUrl, setToken, token };
 
     return (
         <ShopContext.Provider value={value}>
