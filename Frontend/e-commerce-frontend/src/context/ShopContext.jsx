@@ -19,6 +19,7 @@ const ShopContextProvider = (props) => {
     const [products, setProducts] = useState([])
     const [token, setToken] = useState('')
     //structuredclone??
+
     const addToCart = async (itemId, size) => {
         if(!size){
             toast.error("Please select a size.", {theme: 'dark'});
@@ -42,6 +43,19 @@ const ShopContextProvider = (props) => {
         }
 
         setCartItems(cartData);
+
+        if(token)
+        {
+            try
+            {
+                await axios.post(backendUrl+'/api/cart/add', { itemId, size }, { headers: { token } })
+            }
+            catch (e)
+            {
+               console.log(e)
+               toast.error(e.message)
+            }
+        }
     }
 
     const getCartCount = () => {
@@ -69,7 +83,21 @@ const ShopContextProvider = (props) => {
         let cartData = structuredClone(cartItems)
         cartData[itemId][size]= quantity;
          setCartItems(cartData)
-         console.log(cartData)
+         
+         if( token )
+         {
+            try
+            {
+                await axios.post(backendUrl+'/api/cart/update', { itemId, size, quantity }, { headers: { token } })
+
+            }
+            catch (e)
+            {
+               console.log(e)
+               toast.error(e.message)
+            }
+            
+         }
     }
 
     const getCartAmount = () => {
@@ -132,13 +160,30 @@ const ShopContextProvider = (props) => {
         }
     };
 
+    const getUserCart = async ( token ) => {
+        try
+        {
+            const response = await axios.post(backendUrl+'/api/cart/get', {}, { headers: {token}})
+            if(response.data.success)
+                setCartItems( response.data.cartData )
+        }
+        catch (e)
+            {
+               console.log(e)
+               toast.error(e.message)
+            }
+    }
+
+
     useEffect(()=>{
         getProductData();
     },[])
 
     useEffect(()=>{
         if(!token && localStorage.getItem('token'))
-            setToken(localStorage.getItem('token'))
+         {   setToken(localStorage.getItem('token'))
+             getUserCart(localStorage.getItem('token'))
+         }
     })
     
     
