@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useContext, useState } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import Title from '../components/Title';
+import axios from 'axios';
 //import { set } from 'mongoose';
 
 const Orders = () => {
@@ -20,7 +21,7 @@ const Orders = () => {
            {
             let allOrdersItem= []
             response.data.orders.map((order)=>{
-              order.items.map(()=>{
+              order.items.map((item)=>{
                 item['status'] = order.status
                 item['payment'] = order.payment
                 item['paymentMethod'] = order.paymentMethod
@@ -28,13 +29,14 @@ const Orders = () => {
                 allOrdersItem.push(item)
               })
             })
+            console.log(allOrdersItem)
             setOrderData(allOrdersItem.reverse())
            }
          }
     }
     catch(e)
     {
-
+        console.log(e)
     }
   }
 
@@ -67,7 +69,7 @@ const Orders = () => {
               <div className='md:w-1/2 flex justify-between'>
                  <div className='flex items-center gap-2'>
                   <p className='min-w-2 h-2 rounded-full bg-green-500'></p>
-                  <p className='text-sm text-base'>Ready to ship</p>
+                  <p className='text-sm text-base'>{item.status}</p>
                  </div>
                  <button onClick={loadOrderData} className='text-sm text-gray-700 border border-gray-300 rounded py-1.5 px-3'>Track Order</button>
               </div>

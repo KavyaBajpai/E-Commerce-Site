@@ -46,22 +46,27 @@ const userOrder = async (req, res) => {
 const allOrders = async (req, res) => {
     try
     {
-
+       const orders = await orderModel.find({})
+       res.json({success:true, orders})
     }
     catch(e)
     {
-
+        console.log(e)
+        res.json({success: false, message: e.message})
     }
 }
 
 const updateStatus = async (req, res) => {
     try
     {
-
+       const {orderId, status} = req.body
+       await orderModel.findByIdAndUpdate(orderId, {status})
+       res.json({success:true, message: "status updated"})
     }
     catch(e)
     {
-
+        console.log(e)
+        res.json({success: false, message: e.message})
     }
 }
 
