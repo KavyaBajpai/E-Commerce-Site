@@ -12,13 +12,13 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
   const onSubmitHandler = async (e) => {
-    console.log("sign up button clicked")
+    //console.log("sign up button clicked")
     e.preventDefault()
     try{
           if(currState==='Sign Up')
-          {  console.log("sign up api now being called")
+          {  //console.log("sign up api now being called")
              const response = await axios.post(backendUrl+'/api/user/register', {name, email, password})
-             console.log(response.data)
+             //console.log(response.data)
              if(response.data.success)
               {setToken(response.data.token)
               localStorage.setItem('token', response.data.token)}
@@ -31,7 +31,7 @@ const Login = () => {
           {
             
                  const response = await axios.post(backendUrl+'/api/user/login', {email, password})
-                 console.log(response.data)
+                 //console.log(response.data)
                  if(response.data.success)
                   {setToken(response.data.token)
                   localStorage.setItem('token', response.data.token)}

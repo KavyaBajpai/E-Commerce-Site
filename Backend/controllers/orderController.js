@@ -1,5 +1,5 @@
-import orderModel from "../models/orderModel";
-import userModel from "../models/userModel";
+import orderModel from "../models/orderModel.js";
+import userModel from "../models/userModel.js";
 
 const placeOrder = async (req, res) => {
     try
@@ -43,4 +43,48 @@ const userOrder = async (req, res) => {
     }
 }
 
-export { placeOrder }
+const allOrders = async (req, res) => {
+    try
+    {
+
+    }
+    catch(e)
+    {
+
+    }
+}
+
+const updateStatus = async (req, res) => {
+    try
+    {
+
+    }
+    catch(e)
+    {
+
+    }
+}
+
+const placeOrderStripe = async (req, res) => {
+    try
+    {
+
+    }
+    catch(e)
+    {
+
+    }
+}
+
+const placeOrderRazorpay = async (req, res) => {
+    try
+    {
+
+    }
+    catch(e)
+    {
+
+    }
+}
+
+export { placeOrder, userOrder, allOrders, updateStatus, placeOrderStripe, placeOrderRazorpay }

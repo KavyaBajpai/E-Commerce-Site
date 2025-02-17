@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import Title from '../components/Title';
-import { set } from 'mongoose';
+//import { set } from 'mongoose';
 
 const Orders = () => {
 
@@ -24,7 +24,7 @@ const Orders = () => {
                 item['status'] = order.status
                 item['payment'] = order.payment
                 item['paymentMethod'] = order.paymentMethod
-                item['dTE'] = order.date
+                item['date'] = order.date
                 allOrdersItem.push(item)
               })
             })
@@ -56,11 +56,12 @@ const Orders = () => {
                  <div>
                    <p className='sm:text-base font-medium'>{item.name}</p>
                    <div className='flex items-center gap-3 mt-2 text-base text-gray-700'>
-                     <p className='text-lg'>{currency}{item.price}</p>
-                     <p>Quantity: 1</p>
-                     <p>Size: M</p>
+                     <p >{currency}{item.price}</p>
+                     <p>Quantity: {item.quantity}</p>
+                     <p>Size: {item.size}</p>
                    </div>
-                   <p className='mt-2'>Purchase Date: <span className='text-gray-400'>26.01.25</span></p>
+                   <p className='mt-2'>Purchase Date: <span className='text-gray-400'>{new Date(item.date).toDateString()}</span></p>
+                   <p className='mt-2'>Payment: <span className='text-gray-400'>{item.paymentMethod}</span></p>
                  </div>
               </div>
               <div className='md:w-1/2 flex justify-between'>
@@ -68,7 +69,7 @@ const Orders = () => {
                   <p className='min-w-2 h-2 rounded-full bg-green-500'></p>
                   <p className='text-sm text-base'>Ready to ship</p>
                  </div>
-                 <button className='text-sm text-gray-700 border border-gray-300 rounded py-1.5 px-3'>Track Order</button>
+                 <button onClick={loadOrderData} className='text-sm text-gray-700 border border-gray-300 rounded py-1.5 px-3'>Track Order</button>
               </div>
             </div>
           ))

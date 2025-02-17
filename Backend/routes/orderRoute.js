@@ -1,5 +1,5 @@
 import express from "express";
-import { placeOrder } from "../controllers/orderController.js";
+import { placeOrder, allOrders, updateStatus, placeOrderRazorpay, placeOrderStripe, userOrder } from "../controllers/orderController.js";
 import adminAuth from "../middleware/adminAuth.js";
 import authUser from "../middleware/auth.js";
 
@@ -17,7 +17,7 @@ orderRouter.post('/razorpay', authUser, placeOrderRazorpay)
 
 
 //user features
-orderRouter.post('/userorders', authUser, userOrders)
+orderRouter.post('/userorders', authUser, userOrder)
 
 export default orderRouter
 

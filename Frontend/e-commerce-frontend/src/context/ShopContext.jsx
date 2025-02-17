@@ -147,9 +147,9 @@ const ShopContextProvider = (props) => {
     const getProductData = async () => {
         try {
             const response = await axios.get(backendUrl + "/api/product/list");
-            console.log("API Response:", response.data); // ✅ Log full response
+            //console.log("API Response:", response.data); // ✅ Log full response
             if (response.data.success) {
-                console.log("Products received:", response.data.products); // ✅ Check this
+                //console.log("Products received:", response.data.products); // ✅ Check this
                 setProducts(response.data.products);
             } else {
                 toast.error(response.data.message);

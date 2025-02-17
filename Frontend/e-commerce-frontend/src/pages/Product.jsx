@@ -15,10 +15,10 @@ const Product = () => {
   const fetchProductData = async () => {
     
     products.map((item)=>{
-      console.log(item._id);
+      //console.log(item._id);
       if(item._id=== productId){
         setProductData(item);
-        console.log("hello");
+        //console.log("hello");
         return null;
       }
     })

@@ -4,6 +4,7 @@ import Title from '../components/Title'
 import CartTotal from '../components/CartTotal'
 import { assets } from '../assets/assets'
 import { ShopContext } from '../context/ShopContext'
+import axios from 'axios'
 const PlaceOrder = () => {
 //just adding some useless code here
   const a= useState(0);
@@ -31,6 +32,7 @@ const PlaceOrder = () => {
 
   const onSubmitHandler = async (e) => {
      e.preventDefault();
+     
      try{
           let orderItems= []
           for(const items in cartItems)
@@ -49,17 +51,19 @@ const PlaceOrder = () => {
               }
             }
           }
+          //console.log(orderItems)
 
           let orderData = {
             address: formData,
             items: orderItems,
             amount: getCartAmount() + deliveryCharge
           }
-
+          console.log("payment method: ", method)
           switch(method)
           {
             case 'cod' : 
             const response = await axios.post(backendUrl+'/api/order/place', orderData, {headers: {token}})
+            console.log("api response: ", response.data)
             if( response.data.success)
             {
               setCartItems({})
@@ -70,17 +74,21 @@ const PlaceOrder = () => {
               toast.error(response.data.message)
             }
             break;
+
+            default:
+              break;
           }
      }
      catch(e)
      {
-
+        console.log(e)
+        
      }
   }
   
   return (
     //adding code for palce order page
-    <form onClick={onSubmitHandler} className='flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t'>
+    <form onSubmit={onSubmitHandler} className='flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t'>
         {/* Left Side */}
       <div className='flex flex-col gap-4 sm:max-w-[480px]'>
          <div className='text-xl sm:text-2xl my-3'>
@@ -93,7 +101,7 @@ const PlaceOrder = () => {
             </div> 
             
             <input onChange={onChangeHandler} name='email' value={formData.email} placeholder='Email' className='border border-gray-300 rounded py-1.5 px-1.5 w-full' type="email"  id="" />
-            <input onChange={onChangeHandler} name='street' value={formData.street} placeholder='Street' className='border border-gray-300 rounded py-1.5 px-1.5 w-full' type="email"  id="" />
+            <input onChange={onChangeHandler} name='street' value={formData.street} placeholder='Street' className='border border-gray-300 rounded py-1.5 px-1.5 w-full' type="text"  id="" />
            
             <div className='flex gap-3'>
             <input onChange={onChangeHandler} name='city' value={formData.city} placeholder='City' className='border border-gray-300 rounded py-1.5 px-1.5 w-full' type="text"  id="" />
