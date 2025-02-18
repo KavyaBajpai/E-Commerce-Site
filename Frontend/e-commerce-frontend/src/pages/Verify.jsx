@@ -36,6 +36,10 @@ const Verify = () => {
            toast.error(e.message)
         }
     }
+
+    useEffect(()=>{
+        verifyPayment()
+    },[token])
   return (
     <div>
       
